@@ -1,0 +1,31 @@
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: catalogo-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - catalogo-mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  sonarqube:
+    image: sonarqube:lts-community
+    container_name: catalogo-sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+    volumes:
+      - sonarqube-data:/opt/sonarqube/data
+      - sonarqube-logs:/opt/sonarqube/logs
+      - sonarqube-extensions:/opt/sonarqube/extensions
+
+volumes:
+  catalogo-mongo-data:
+  sonarqube-data:
+  sonarqube-logs:
+  sonarqube-extensions:

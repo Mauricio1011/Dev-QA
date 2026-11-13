@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: catalogo-productos
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/catalogo}
+      auto-index-creation: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  mvc:
+    problemdetails:
+      enabled: false
+
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: never
+    include-binding-errors: never
+    include-stacktrace: never
+    include-exception: false
