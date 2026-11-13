@@ -19,6 +19,8 @@ mvn spring-boot:run
 
 La API queda en `http://localhost:8080`. La base por defecto es `mongodb://localhost:27017/catalogo`. Se puede cambiar con la variable `MONGODB_URI`.
 
+La documentación interactiva queda en `http://localhost:8080/swagger-ui/index.html`. Desde ahí se pueden ejecutar los endpoints y ver el código HTTP y el JSON de respuesta.
+
 ## API
 
 | Método | Ruta | Éxito |
@@ -97,13 +99,17 @@ JaCoCo publica el reporte HTML en `target/site/jacoco/index.html` y el XML en `t
 docker compose up -d sonarqube
 ```
 
-Cuando `http://localhost:9000` responda, entra con `admin` / `admin`, cambia la contraseña y genera un token. Después:
+Cuando `http://localhost:9000` responda, entra con `admin` / `admin` la primera vez y cambia la contraseña. Genera un token de usuario. La imagen de este repositorio es SonarQube 9.9 LTS y autentica el análisis con `-Dsonar.login`. En SonarQube 10 o posterior el parámetro equivalente es `-Dsonar.token`.
 
 ```bash
-mvn verify sonar:sonar "-Dsonar.host.url=http://localhost:9000" "-Dsonar.token=EL_TOKEN"
+mvn verify sonar:sonar "-Dsonar.host.url=http://localhost:9000" "-Dsonar.login=EL_TOKEN"
 ```
 
-El análisis espera el Quality Gate. El proyecto no debe reportar bugs ni vulnerabilidades, y la cobertura que consume SonarQube es la de JaCoCo.
+El análisis espera el Quality Gate. El proyecto no debe reportar bugs ni vulnerabilidades, y la cobertura que consume SonarQube es la de JaCoCo. El panel del análisis de evidencia está en `http://localhost:9000/dashboard?id=devqa-catalogo-productos`.
+
+## Reporte
+
+El documento formal, con las capturas de Swagger, la ejecución de `mvn verify`, el reporte de JaCoCo y el panel de SonarQube, está en `docs/HU-01-Reporte-Tecnico.pdf`. Las imágenes originales están en `docs/evidencias`.
 
 ## Estructura
 
